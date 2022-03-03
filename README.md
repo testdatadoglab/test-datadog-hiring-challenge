@@ -159,7 +159,7 @@ Suggested plugins will be installed. Subsequently, the Ansible and Terraform plu
  
 
 
--   Git repositorio URL: (https://github.com/testdatadoglab/test-datadog.git)
+-   Git repositorio URL: (https://github.com/testdatadoglab/test-datadog-hiring-challenge.git)
 
 
 
@@ -295,12 +295,12 @@ Jenkins Access:
 
 ### 1. Checkout code from gitHub:
 
-https://github.com/testdatadoglab/test-datadog.git
+https://github.com/testdatadoglab/test-datadog-hiring-challenge.git
 
 >```
 >stage('Checkout') {
 >   // Checkout our application source code
->   git url: 'https://github.com/testdatadoglab/test-datadog.git', credentialsId: 'jenkins-user-github', branch: 'master'
+>   git url: 'https://github.com/testdatadoglab/test-datadog-hiring-challenge.git', credentialsId: 'jenkins-user-github', branch: 'master'
 >    }
 >```
 
