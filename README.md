@@ -382,8 +382,6 @@ https://github.com/testdatadoglab/test-datadog.git
 >
 >```
 
-https://docs.datadoghq.com/agent/kubernetes/?tab=helm
-
 ### 4. Installation of  Datadog on Kubernetes cluster
 
 This is the repositories that Helm will use while installing  Datadog Agent.
