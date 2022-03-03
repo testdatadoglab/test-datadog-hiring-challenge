@@ -314,7 +314,7 @@ https://github.com/testdatadoglab/test-datadog.git
 -   *Wget*: Needed to download Terraform and Helm software.
 -   *Kubectl*: Kubernetes CLI.
 -   *Unzip*: Software needed to uncompress files.
--   *Helm*: Utility used in Kubernetes environment which makes easier K8\'s deployments.
+-   *Helm*: Utility used on Kubernetes environment which makes easier K8\'s deployments.
 
  
 
