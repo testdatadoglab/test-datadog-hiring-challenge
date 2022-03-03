@@ -1,0 +1,73 @@
+environment {
+      APP_NAME = "datadog-test-lab"
+    }
+node {
+    
+    
+
+    stage('Checkout') {
+        // Checkout our application source code
+        git url: 'https://github.com/testdatadoglab/test-datadog.git', credentialsId: 'jenkins-user-github', branch: 'master'      
+    }
+    
+  
+    stage('Software Installation') {
+        // Lets solve environment dependencies
+        dir ('.') {
+        sh "id"    
+        sh "sudo yum update -y --skip-broken --nobest"
+        sh "sudo yum upgrade -y --skip-broken --nobest"
+        sh "sudo yum install git -y"
+        sh "sudo yum install wget -y"
+        // Instalación kubectl
+        sh "sudo yum install kubectl -y"
+        // Instalación unzip
+        sh "sudo yum install unzip -y"
+        // Instalación Ansible
+        sh "sudo yum install ansible -y"
+        // Instalación Terraform 
+        sh "sudo  wget https://releases.hashicorp.com/terraform/1.0.9/terraform_1.0.9_linux_amd64.zip && sudo unzip -qq terraform_1.0.9_linux_amd64.zip  &&  sudo mv terraform  /usr/bin && sudo rm -Rf terraform_1.0.9_linux_amd64.zip*"
+        // Instalación Helm
+        sh "sudo wget https://get.helm.sh/helm-v3.4.1-linux-amd64.tar.gz && sudo tar xvf helm-v3.4.1-linux-amd64.tar.gz && sudo mv linux-amd64/helm /usr/bin && sudo rm -Rf helm-v3.4.1-linux-amd64.tar.gz && sudo rm -rf linux-amd64"
+        }
+    }
+
+
+// Configuracion gcloud para acceder al Cluster K8s
+
+   stage('Terraform init/plan'){
+        sh "pwd"
+        dir ('./terraform_files') {
+        sh "sudo terraform init"
+        sh "sudo terraform plan"
+        sh "sudo terraform validate"
+        }
+    }
+
+    
+    stage('Terraform Apply'){
+        sh "pwd"
+        dir ('./terraform_files') {
+        sh "sudo terraform apply  -auto-approve"
+        }
+    }
+
+
+ //Instalación Of Helm Repositories
+
+    stage('Helm Repositories Installation'){
+	    sh "helm repo add datadog https://helm.datadoghq.com"
+        sh "helm repo update"
+    }
+
+
+    stage('Datadog Cluster Agent k8s Installation'){
+        sh "helm install testrelease -f datadog-values.yaml --set datadog.site='datadoghq.eu' --set datadog.apiKey=${DATADOG_API_KEY} datadog/datadog "
+    }
+
+    stage('Install Tomcat on k8s'){
+        sh "cd ./kubernetes"
+        sh "kubectl apply -f tomcat-deployment-k8s-yaml"
+        sh "kubectl apply -f tomcat-loadbalancer-k8s"
+    }
+}

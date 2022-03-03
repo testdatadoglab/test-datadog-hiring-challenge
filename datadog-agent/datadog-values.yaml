@@ -1,0 +1,9 @@
+datadog:
+  logs:
+    enabled: true
+    containerCollectAll: true
+## Enable apm agent and provide custom configs
+  apm:
+    # datadog.apm.portEnabled -- Enable APM over TCP communication (port 8126 by default)
+    ## ref: https://docs.datadoghq.com/agent/kubernetes/apm/
+    portEnabled: true

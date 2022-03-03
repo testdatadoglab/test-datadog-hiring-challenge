@@ -1,0 +1,19 @@
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "tomcat-deployment-service"
+  namespace: "default"
+  labels:
+    tags.datadoghq.com/env: "stage"
+    tags.datadoghq.com/service: "tomcatinfra"
+    tags.datadoghq.com/version: "1.0"
+spec:
+  ports:
+  - protocol: "TCP"
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: "tomcatinfra"
+  type: "LoadBalancer"
+  loadBalancerIP: ""
