@@ -51,6 +51,7 @@ node {
     stage('Helm Repositories Installation'){
 	    sh "helm repo add datadog https://helm.datadoghq.com"
         sh "helm repo update"
+        dir ('./datadog-agent')
         sh "helm install testrelease -f datadog-values.yaml --set datadog.site='datadoghq.eu' --set datadog.apiKey=${DATADOG_API_KEY} datadog/datadog "
     }
 
