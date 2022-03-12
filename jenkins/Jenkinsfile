@@ -35,19 +35,12 @@ node {
 
 // Configuracion gcloud para acceder al Cluster K8s
 
-   stage('Terraform init/plan'){
+   stage('Infrastructure creation (Terraform)'){
         sh "pwd"
         dir ('./terraform_files') {
         sh "sudo terraform init"
         sh "sudo terraform plan"
-        sh "sudo terraform validate"
-        }
-    }
-
-    
-    stage('Terraform Apply'){
-        sh "pwd"
-        dir ('./terraform_files') {
+        sh "sudo terraform validate"    
         sh "sudo terraform apply  -auto-approve"
         }
     }
@@ -61,13 +54,18 @@ node {
     }
 
 
-    stage('Datadog Cluster Agent k8s Installation'){
+   /* stage('Datadog Cluster Agent k8s Installation'){
         sh "helm install testrelease -f datadog-values.yaml --set datadog.site='datadoghq.eu' --set datadog.apiKey=${DATADOG_API_KEY} datadog/datadog "
     }
+*/
 
-    stage('Install Tomcat on k8s'){
+    stage('Prometheus / Grafana installation on k8s'){}
+    
+    stage('Deployment on k8s'){
         sh "cd ./kubernetes"
         sh "kubectl apply -f tomcat-deployment-k8s-yaml"
         sh "kubectl apply -f tomcat-loadbalancer-k8s"
     }
+
+    
 }
