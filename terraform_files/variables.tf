@@ -32,7 +32,7 @@ variable "service_account" {
 
 variable "cluster_name" {
   description = "The name for the GKE cluster"
-  default     = "gke-datadog-cluster"
+  default     = "gke-cluster"
 }
 
 variable "region" {
@@ -48,12 +48,12 @@ variable "zone" {
 
 variable "network" {
   description = "The VPC network created to host the cluster in"
-  default     = "gke-datadog-network"
+  default     = "gke-network"
 }
 
 variable "subnetwork" {
   description = "The subnetwork created to host the cluster in"
-  default     = "gke-datadog-subnet"
+  default     = "gke-subnet"
 }
 
 variable "ip_range_pods_name" {
@@ -68,9 +68,9 @@ variable "ip_range_services_name" {
 
 variable "node-nginx" {
   description = "The name os the standalone virtual machine where NGINX will run"
-  default = "test-datadog-nginx-instance"
+  default = "test-nginx-instance"
 }
 variable "gke-node-pools" {
   description = "The name of the node pool for GKE Cluster"
-  default = "datadog-node-pool"
+  default = "gke-node-pool"
 }
